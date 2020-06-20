@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Lok Virsa",
+    "slug": "LokVirsa",
+    "platforms": [ "ios", "android" ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./App/Assets/Images/icon.png",
+    "splash": {
+      "image": "./App/Assets/Images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "bundleIdentifier": "com.lokvirsa",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.lokvirsa",
+      "versionCode": 1
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
