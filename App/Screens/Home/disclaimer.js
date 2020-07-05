@@ -14,27 +14,43 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { WebView } from 'react-native-webview';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../Redux/Actions/userActions';
-import Footer from './../Component/footer';
+import Footer from '../Component/footer';
 const logo = './../../Assets/Images/logo.png'
 const bg = './../../Assets/Images/bg_768x1024.png'
 const banner = './../../Assets/Images/banner.png'
 const nav_menu_icon = './../../Assets/Icons/nav_menu_icon.png';
 const search_icon = './../../Assets/Icons/search_icon.png';
 
-const bottom_home = './../../Assets/Icons/bottom_home.png';
-const bottom_video = './../../Assets/Icons/bottom_video.png';
-const bottom_menu = './../../Assets/Icons/bottom_menu.png';
-const bottom_search = './../../Assets/Icons/bottom_search.png';
-const bottom_message = './../../Assets/Icons/bottom_message.png';
-
-class Player extends React.Component {
+class Disclaimer extends React.Component {
     _isMounted = false;
     Loader = true;
     _isMounted = false;
     constructor(props){
         super(props);
         this.state = {
-            data:{ url:'', name:'' }
+            data:{ url:'', name:'' },
+            privacyPolicy: {
+                head:"Disclaimer:",
+                p1:`Welcome to LOKVIRSA.  The terms and conditions of your use of this Site are explained below. These terms and conditions may be modernized or distorted without any notice to you.`,
+                p2:`When you use this site you accept that you have understood the Terms of Use and that you agree to be bound by the same, which may be customized from time to time. LOKVIRSA takes no dependability for the content of external Internet sites. Other websites that we connect to are owned and operated by third parties and LOKVIRSA has no power over them. The reality that we comprise links to other websites does not mean that LOKVIRSA approves of, or supports, any other third party website or the content of that website. We admit no legal responsibility for any statements, information, products, or services that are published on, or are available through, any websites owned or operated by third parties. Links to other websites are put in for expediency only and do not make up the approval of resources on the linked websites.`,
+                p4:`Nothing in the Terms limits or eliminates any assurance, warranties, illustration, or conditions roundabout or compulsory by law, as well as the Consumer Law (or any liability beneath them) which by law may not be partial or excluded. LOKVIRSA accepts no liability for the exactness, wholeness, expediency or otherwise, of the contents of any neither websites nor does it sanction any views expressed on any websites. Users are advised to confirm/check any information with the relevant Government department(s) and/or another source (s) and to get any suitable expert advice before acting on any other websites.`,
+                
+                head02:`Acceptance of the Terms:`,
+                p5:`You agree to the Terms by leftover on the Website. You may also acknowledge the Terms by clicking to accept or have the same opinion to the Terms where this option is made obtainable to you by the Company in the user boundary.`,
+                
+                head03:`Copyright and Intellectual Property:`,
+                p6:`The Website is subject to copyright. The material on the Website is secluded by copyright under the laws of the UK and through global treaties. Unless or else point out, all rights (counting copyright) in the content and collection of the Website (including but not restricted to text, graphics, logos, button icons, video images, audio clips, Website, code, scripts, design elements, and interactive features) or the content are owned or illegal for these purposes and are kept by the corporation or its contributors.`,
+                
+                cat1:`Privacy:`,
+                p7:`The Company takes your privacy gravely and any information grant through your exploit of the Website and/or content is subject to the Company's Privacy Policy, which is accessible on the Website.`,
+
+                head04:`Limitation of Liability:`,
+                p8:`The Company's total legal responsibility arising out of or in association with the content or these Terms, however arising, as well as under contract, tort (plus negligence), in evenhandedness, under a decree or otherwise, will not go beyond the resupply of the content to you.`,
+                p9:`You specifically comprehend and agree that Ecology and Heritage Partners, its affiliates, employees, agents, contributors, and licensors shall not be responsible to you for any direct, indirect, accompanying, special momentous or exemplary damages which may be incurred by you, however, caused and under any hypothesis of liability. This shall comprise but is not some degree of, any defeat of profit (whether incurred unswervingly or not directly), and thrashing of goodwill or business status, and any other elusive loss.`,
+
+                head05:`Confidential:`,
+                p10:`All communications relating to discussions made by the Parties arising out of and in association with this argument resolution section are secret and to the amount possible, have to be treated as "without discrimination" negotiations for applicable laws of verification.`,
+            }
         }
     }
 
@@ -54,28 +70,7 @@ class Player extends React.Component {
 
     
     render(){
-        const { data } = this.state;
-
-        const getUrl = (url) =>{
-            if(url.includes("http")){
-                if(url.includes("watch?v=")){
-                    return { html: `<iframe src="${url.replace("watch?v=", "embed/")}"
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="false"
-                        />`}
-                }else if(url.includes("youtu.be")){
-                    return { html: `<iframe src="${url.replace("youtu.be", "youtube.com/embed/")}"
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="false"
-                        />`}
-                }else{
-                    return { uri: url }
-                }
-            }else{
-                return { html: `<iframe src="https://www.youtube.com/embed/${url}"
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="false"
-                    />`}
-            }
-        }
-
+        const { privacyPolicy } = this.state;
         return (
             <Grid style={styles.mainContainer}>
                 <Image source={require(bg)} style={styles.bgImage}/>
@@ -103,36 +98,37 @@ class Player extends React.Component {
                     </Row>
                     <Row style={styles.headContainer02}>
                         <Image source={require(banner)} style={styles.headContainer02Img}/>
-                        <Text style={styles.headContainer02Text}>Videos</Text>
+                        <Text style={styles.headContainer02Text}>Disclaimer</Text>
                     </Row>
 
 
                     <Row style={styles.contentContainer}>
                         <SafeAreaView style={styles.contentContainer01}>
                             <ScrollView contentContainerStyle={styles.contentScrollView}>
-                            <Row style={styles.liveStreamContainer}>
-                                {
-                                    this.props.navigation.isFocused() ?
-                                    data.url !== '' && data.url !== undefined ? (
-                                        <WebView
-                                            style={{backgroundColor: 'black'}}
-                                            ref={(ref) => { this.videoPlayer = ref;}}
-                                            contentInset={{top: 0, left: 0, bottom: 0, right: 0}}
-                                            startInLoadingState={this.Loader}
-                                            allowsInlineMediaPlayback={false}
-                                            // scrollEnabled={false}
-                                            onLoadEnd={(e)=>{ this.Loader = false }}
-                                            useWebKit={true}
-                                            originWhitelist={['*']}
-                                            source={{ ...getUrl(data.url)}}/>
-                                    ):(
-                                        <Row style={{ width:widthPercentageToDP('89%'), alignItems:'center', justifyContent:'center' }}>
-                                            <ActivityIndicator size='large' />
-                                        </Row>
-                                    ):<></>
-                                }
-                            </Row>
-                            <Row style={{ marginTop:20 }}><Text style={{ fontSize:24, color:'gray' }}>{data.name}</Text></Row>
+                                <Col style={{ padding:10 }}>
+                                    
+                                    <Text style={{ fontSize:16, fontWeight:"bold", color:"#2a0b87", marginBottom:10 }}>Disclaimer:</Text>
+                                    <Text style={[styles.paragraph, { fontWeight:"600" }]}>{privacyPolicy.p1}</Text>
+                                    <Text style={styles.paragraph}>{privacyPolicy.p2}</Text>
+                                    <Text style={styles.paragraph}>{privacyPolicy.p4}</Text>
+
+                                    <Text style={[styles.cat, {fontSize:16, color:"#7030a0",}]}>{privacyPolicy.head02}</Text>
+                                    <Text style={styles.paragraph}>{privacyPolicy.p5}</Text>
+                                    
+                                    <Text style={[styles.cat, {fontSize:16, color:"#872240",}]}>{privacyPolicy.head03}</Text>
+                                    <Text style={styles.paragraph}>{privacyPolicy.p6}</Text>
+
+                                    <Text style={[styles.cat, { color:"#2a0b87" }]}>{privacyPolicy.cat1}</Text>
+                                    <Text style={styles.paragraph}>{privacyPolicy.p7}</Text>
+
+                                    <Text style={[styles.cat, {fontSize:16, color:"#870b0b",}]}>{privacyPolicy.head04}</Text>
+                                    <Text style={styles.paragraph}>{privacyPolicy.p8}</Text>
+                                    <Text style={styles.paragraph}>{privacyPolicy.p9}</Text>
+                                    
+                                    <Text style={[styles.cat, {fontSize:16, color:"#2a0b87",}]}>{privacyPolicy.head05}</Text>
+                                    <Text style={styles.paragraph}>{privacyPolicy.p10}</Text>
+
+                                </Col>
                             </ScrollView>
                         </SafeAreaView>
                     </Row>
@@ -144,6 +140,9 @@ class Player extends React.Component {
 };
 
 const styles = StyleSheet.create({
+    paragraph:{ fontSize:14, color:"#333333", marginBottom:10 },
+    cat:{ fontSize:14, color:"#333333", fontWeight:'600', marginBottom:10 },
+
 
     mainContainer:{
         ...Platform.select({
@@ -195,14 +194,6 @@ const styles = StyleSheet.create({
         color:"#333"
     },
 
-    liveStreamContainer:{
-        height:heightPercentageToDP('36%'),
-        alignItems:'center',
-        justifyContent:'center',
-        borderRadius:4,
-        borderColor:'gray',
-        borderWidth:2,
-    },
 
     // Content Start
     contentContainer:{
@@ -339,4 +330,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Player);
+export default connect(mapStateToProps, mapDispatchToProps)(Disclaimer);

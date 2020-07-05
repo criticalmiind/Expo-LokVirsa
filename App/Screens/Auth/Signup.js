@@ -6,7 +6,8 @@ import {
   TextInput,
   Platform,
   ActivityIndicator,
-  View
+  View,
+  ImageBackground
 } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
@@ -48,78 +49,73 @@ class Signup extends React.Component {
         const { payload } = this.state;
         const { isLoader } = this.props;
         return (<>
-            { isLoader && <Loader /> }
-            <Grid style={styles.mainContainer}>
-                <Image source={require(bg)} style={styles.bg}/>
-                <Col>
-                    <Row style={styles.rowOne}>
-                        <Text style={styles.rowOneText}>Register</Text>
-                    </Row>
-                    <Row style={styles.rowTwo}>
-                        <Col style={styles.rowTwo01}>
-                            <TextInput
-                                style={styles.textInput}
-                                value={payload.name}
-                                maxLength={28}
-                                placeholder="Username"
-                                textContentType="username"
-                                autoCompleteType="username"
-                                dataDetectorTypes="all"
-                                keyboardType="name-phone-pad"
-                                onChangeText={(char)=>{
-                                    this.setPayload({ name: char })
-                                }}/>
-                            <TextInput
-                                style={styles.textInput}
-                                value={payload.password}
-                                maxLength={48}
-                                placeholder="Password"
-                                secureTextEntry={true}
-                                textContentType="password"
-                                autoCompleteType="password"
-                                dataDetectorTypes="all"
-                                keyboardType="name-phone-pad"
-                                onChangeText={(char)=>{
-                                    this.setPayload({ password: char })
-                                }}/>
-                            <TextInput
-                                style={styles.textInput}
-                                value={payload.password_confirmation}
-                                maxLength={48}
-                                placeholder="Confirm Password"
-                                secureTextEntry={true}
-                                textContentType="password"
-                                autoCompleteType="password"
-                                dataDetectorTypes="all"
-                                keyboardType="name-phone-pad"
-                                onChangeText={(char)=>{
-                                    this.setPayload({ password_confirmation: char })
-                                }}/>
-                            <Row style={styles.buttonOneRow}>
-                                <TouchableOpacity
-                                    style={styles.buttonOne}
-                                    onPress={()=>{
-                                        this.authentication({ ...payload, action:'signUp' })
-                                    }}>
-                                    <Image source={require(auth_button)} style={{ width:widthPercentageToDP('100%'), height:heightPercentageToDP('10%') }}/>
-                                </TouchableOpacity>
-                            </Row>
-                            <Row style={styles.rowThreeBtn}>
-                                <TouchableOpacity
-                                    onPress={()=>{
-                                        this.props.navigation.replace("Signin")
-                                    }}>
-                                    <Text style={styles.rowThreeText}>Existing Account ?</Text>
-                                </TouchableOpacity>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row style={styles.rowThree}>
-                        <Col style={styles.rowThree}>
-                            <Image source={require(logo)} style={styles.footerLogo}/>
-                        </Col>
-                    </Row>
-                </Col>
+            <Loader isLoader={isLoader} />
+            <Grid style={[styles.mainContainer, { backgroundColor:'pink' }]}>
+                <ImageBackground source={require(bg)} style={[styles.mainContainer, { height:'100%' }]}>
+                        <Row style={styles.rowOne}><Text style={styles.rowOneText}>Register</Text></Row>
+                        
+                        <Row style={styles.rowTwo}>
+                            <Col style={styles.rowTwo01}>
+                                <TextInput
+                                    style={styles.textInput}
+                                    value={payload.name}
+                                    maxLength={28}
+                                    placeholder="Username"
+                                    textContentType="username"
+                                    autoCompleteType="username"
+                                    dataDetectorTypes="all"
+                                    keyboardType="name-phone-pad"
+                                    onChangeText={(char)=>{
+                                        this.setPayload({ name: char })
+                                    }}/>
+                                <TextInput
+                                    style={styles.textInput}
+                                    value={payload.password}
+                                    maxLength={48}
+                                    placeholder="Password"
+                                    secureTextEntry={true}
+                                    textContentType="password"
+                                    autoCompleteType="password"
+                                    dataDetectorTypes="all"
+                                    keyboardType="name-phone-pad"
+                                    onChangeText={(char)=>{
+                                        this.setPayload({ password: char })
+                                    }}/>
+                                <TextInput
+                                    style={styles.textInput}
+                                    value={payload.password_confirmation}
+                                    maxLength={48}
+                                    placeholder="Confirm Password"
+                                    secureTextEntry={true}
+                                    textContentType="password"
+                                    autoCompleteType="password"
+                                    dataDetectorTypes="all"
+                                    keyboardType="name-phone-pad"
+                                    onChangeText={(char)=>{
+                                        this.setPayload({ password_confirmation: char })
+                                    }}/>
+                                <Row style={styles.buttonOneRow}>
+                                    <TouchableOpacity
+                                        style={styles.buttonOne}
+                                        onPress={()=>{
+                                            this.authentication({ ...payload, action:'signUp' })
+                                        }}>
+                                        <Image source={require(auth_button)} style={{ width:widthPercentageToDP('100%'), height:heightPercentageToDP('10%') }}/>
+                                    </TouchableOpacity>
+                                </Row>
+                                <Row style={styles.rowThreeBtn}>
+                                    <TouchableOpacity
+                                        onPress={()=>{
+                                            this.props.navigation.replace("Signin")
+                                        }}>
+                                        <Text style={styles.rowThreeText}>Existing Account ?</Text>
+                                    </TouchableOpacity>
+                                </Row>
+                            </Col>
+                        </Row>
+                        
+                        <Row style={styles.rowThree}><Image source={require(logo)} style={styles.footerLogo}/></Row>
+                </ImageBackground>
             </Grid>
         </>);
     }
@@ -128,11 +124,8 @@ class Signup extends React.Component {
 const styles = StyleSheet.create({
     // Head Start
     mainContainer:{
-        
-    },
-    headContainer:{
-        backgroundColor: "#FFF6CA",
-        height:heightPercentageToDP('8%'),
+        height:heightPercentageToDP('100%'),
+        width:widthPercentageToDP('100%')
     },
     bg:{
         ...Platform.select({
@@ -186,8 +179,9 @@ const styles = StyleSheet.create({
         borderRadius:50,
     },
     rowThree:{
-        alignItems:'flex-start',
-        justifyContent:'flex-start',
+        alignItems:'center',
+        justifyContent:'center',
+        height:heightPercentageToDP('10%'),
     },
     rowThreeBtn:{
         marginTop:heightPercentageToDP('4%'),

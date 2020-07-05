@@ -19,7 +19,7 @@ import { mapStateToProps, mapDispatchToProps } from '../Redux/Actions/userAction
 
     render(){
         const { isLoggedIn } = this.props;
-        if(isLoggedIn ){
+        if(isLoggedIn){
             return <Drawer />
         }else{
             return <AuthNavigator />

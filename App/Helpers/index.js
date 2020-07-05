@@ -1,6 +1,7 @@
 import { showMessage } from "react-native-flash-message";
 import Axios from "axios";
-Axios.defaults.baseURL = 'http://developershub.co/lokvirsa/api/index.php';
+Axios.defaults.baseURL = 'http://lokvirsa.tv/api/index.php';
+// Axios.defaults.baseURL = 'http://developershub.co/lokvirsa/api/index.php';
 
 export function splitArrayIntoChunksOfLen(array, lenght) {
     var chunks = [], i = 0, n = array.length;
@@ -13,7 +14,7 @@ export function splitArrayIntoChunksOfLen(array, lenght) {
 // Login and SignUp
 export function authentication(payload={}){
   this.props.setLoader(true)
-  if(payload.password !== payload.password_confirmation && payload.action === 'signUp'){
+  if(payload.password !== payload.password_confirmation && (payload.action === 'signUp' || payload.action === 'updateProfile') ){
     showMessage({ message: "passwords doesn't matched!", type: 'danger' })
     return;
   }
@@ -22,7 +23,7 @@ export function authentication(payload={}){
   for(let key in payload) {
     formData.append(key, payload[key]);
     if(payload[key] === '' || payload[key] === undefined){
-      showMessage({ message: `${key} field is required!`, type: 'danger' })
+      showMessage({ message: `${key} field is required!` })
       return;
     }
   }
@@ -30,10 +31,12 @@ export function authentication(payload={}){
   Axios.post('', formData)
     .then((res)=>{
       this.props.setLoader(false)
-      // console.log("Success : ", res)
       if(!!res.data.status){
-        showMessage({ message: res.data.message, type: 'success' })
-        if(payload.action === 'signIn'){
+        showMessage({ message: res.data.message, type: 'warning' })
+        if(payload.action === 'updateProfile'){
+          // this.props.setUserData(res.data.data[0]);
+        }
+        if(payload.action === 'signIn' && res.data.data.length > 0){
           this.props.setLoginStatus(true);
           this.props.setUserData(res.data.data[0]);
         }
@@ -41,12 +44,12 @@ export function authentication(payload={}){
           this.props.navigation.replace("Signin");
         }
       }else{
-        showMessage({ message: res.data.message, type: 'danger' })
+        showMessage({ message: res.data.message })
       }
     })
     .catch((err)=>{
+      // console.log("Error : ", err)
       this.props.setLoader(false)
-      console.log("Error : ", err.response)
       showMessage({ message: err.response.message, type: 'danger' })
     })
 }
@@ -71,16 +74,22 @@ export function getData(payload={}, action, callback){
     default:
       break;
   }
+
   Axios.get(uri)
     .then((res)=>{
-      console.log("Success : ", res)
-      callback(res.data)
-      this.props.setLoader(false)
+      // console.log("Success : ", res)
+      if (res.data.status === 1) {
+        callback(res.data)
+        this.props.setLoader(false)        
+      }else{
+        callback({ error:true, data: { streaming:[], categories:[] } })
+        showMessage({ message:res.data.message, type:'danger' })
+      }
     })
     .catch(err=>{
+      // console.log("Error : ", uri, err)
       showMessage({ message:'Something went wrong!\nplease restart application!', type:'danger' })
-      callback({ error:true })
+      callback({ error:true, data: { streaming:[], categories:[] } })
       this.props.setLoader(false)
-      console.log("Error : ", uri, err.response)
     })
 }

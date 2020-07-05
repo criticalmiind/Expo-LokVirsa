@@ -20,77 +20,38 @@ const logo = './../../Assets/Images/logo.png'
 const bg = './../../Assets/Images/bg_768x1024.png'
 const banner = './../../Assets/Images/banner.png'
 const nav_menu_icon = './../../Assets/Icons/nav_menu_icon.png';
+const search_icon = './../../Assets/Icons/search_icon.png';
 
-class Blogs extends React.Component {
+const bottom_home = './../../Assets/Icons/bottom_home.png';
+const bottom_video = './../../Assets/Icons/bottom_video.png';
+const bottom_menu = './../../Assets/Icons/bottom_menu.png';
+const bottom_search = './../../Assets/Icons/bottom_search.png';
+const bottom_message = './../../Assets/Icons/bottom_message.png';
+
+class ViewBlogs extends React.Component {
     _isMounted = false;
     Loader = true;
     getData = getData.bind(this);
     constructor(props){
         super(props);
         this.state = {
-            selectComponent: this.props.navigation.getParam('component') ? this.props.navigation.getParam('component') : 'unknown',
-            isShow:false,
-            tempArray:[],
-            dataArray:[],
+            dataArray:[]
         }
     }
 
     UNSAFE_componentWillMount(){
         this._isMounted = true;
         if(this._isMounted){
-            this.getBlogs()
-        }
-    }
 
-    getBlogs(){
-        this.getData({}, 'blogs', (data)=>{
-            if(this._isMounted){
-                this.setState({ ...this.state, dataArray:data.data, tempArray:data.data })
-            }
-        })
+        }
     }
 
     componentWillUnmount(){
         this._isMounted = false;
     }
 
-    filterData(data){
-        this.setStateObj({ dataArray:data })
-    }
-
-    setStateObj(obj){
-        if(this._isMounted){ this.setState({ ...this.state, ...obj }) }
-    }
-
     render(){
-        const { isShow } = this.state;
-
-        const renderBlogs = () => {
-            if(this.state.dataArray.length > 0){
-                return(
-                    this.state.dataArray.map((item, index)=>{
-                        return (
-                            <Row style={styles.blogRow} key={index}>
-                                <TouchableOpacity onPress={()=> { this.props.navigation.navigate("ViewBlog", { blog:item }) }}>
-                                <Row style={styles.blogPlayerView}>
-                                    <Image source={{uri:`${item.image}`}} style={styles.blogImg}/>
-                                </Row>
-                                <Row style={styles.blogContentView}>
-                                    <Text style={styles.blogTitle}>{item.title}</Text>
-                                </Row>
-                                </TouchableOpacity>
-                            </Row>
-                        )
-                    })
-                )
-            }else{
-                return(
-                    <Row style={styles.blogsLoader}>
-                        <ActivityIndicator size="large" />
-                    </Row>
-                )
-            }
-        }
+        const blog = this.props.navigation.getParam("blog");
 
         return (
             <Grid style={styles.mainContainer}>
@@ -110,27 +71,31 @@ class Blogs extends React.Component {
                             <Image source={require(logo)} style={styles.logo}/>
                         </Col>
 
-                        <SearchBox
-                            tempArray={this.state.tempArray}
-                            filterFun={this.filterData.bind(this)}
-                            showSearchBox={(bolean)=>{ this.setStateObj({ isShow: bolean }) }}
-                            isShow={this.state.isShow}/> 
+                        <SearchBox />
                     </Row>
                     <Row style={styles.headContainer02}>
                         <Image source={require(banner)} style={styles.headContainer02Img}/>
-                        <Text style={styles.headContainer02Text}>Blogs</Text>
+                        <Text style={styles.headContainer02Text}>Blogs Detail</Text>
                     </Row>
 
                     <Row style={styles.contentContainer}>
                         <SafeAreaView style={styles.contentContainer01}>
                             <ScrollView contentContainerStyle={styles.contentScrollView}>
-                                { renderBlogs() }
+                           
+                                <Row style={styles.blogRow}>
+                                    <Row style={styles.blogPlayerView}>
+                                        <Image source={{uri:`${blog.image}`}} style={styles.blogImg}/>
+                                    </Row>
+                                    <Row style={styles.blogContentView}>
+                                        <Text style={styles.blogTitle}>{blog.title}</Text>
+                                        <Text style={styles.blogCategory}>{blog.content}</Text>
+                                    </Row>
+                                </Row>
+
                             </ScrollView>
                         </SafeAreaView>
                     </Row>
-
                     <Footer navigation={this.props.navigation} />
-                
                 </Col>
             </Grid>
         );
@@ -280,4 +245,4 @@ const styles = StyleSheet.create({
     // Blogs
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Blogs);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewBlogs);

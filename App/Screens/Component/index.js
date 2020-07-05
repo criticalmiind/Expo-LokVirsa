@@ -6,7 +6,7 @@ import { heightPercentageToDP, widthPercentageToDP } from "react-native-responsi
 export const Loader = ({ isLoader }) =>{
     if(isLoader){
         return(
-            <Row style={{backgroundColor:'black', opacity:0.6, position:'absolute', height:heightPercentageToDP('100%'), width:widthPercentageToDP('100%'), alignItems:'center', justifyContent:'center', zIndex:100 }}>
+            <Row style={{backgroundColor:'black', opacity:0.7, position:'absolute', height:heightPercentageToDP('100%'), width:widthPercentageToDP('100%'), alignItems:'center', justifyContent:'center', zIndex:100, top:32 }}>
                 <ActivityIndicator size='large' />
             </Row>
         )

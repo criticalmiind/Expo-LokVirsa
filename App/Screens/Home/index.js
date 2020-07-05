@@ -51,13 +51,18 @@ class Home extends React.Component {
             eventslist:[],
             showsLoader:true,
             catLoader:false,
-            isLoader: false
+            isLoader: false,
+            play_live: true,
         }
     }
 
     async UNSAFE_componentWillMount(){
         this._isMounted = true;
-        this.getCategories()
+        if (this._isMounted) {
+            setTimeout(()=>{
+                this.getCategories()
+            },1000)
+        }
     }
 
     componentWillUnmount(){
@@ -69,8 +74,6 @@ class Home extends React.Component {
         this.getData({}, 'categories', (data)=>{
             const { streaming, categories } = data.data;
             let cat = [], events = [];
-            console.log("Category : ", data, streaming, categories)
-
             if(!data.error || (streaming && categories)){
                 categories.map(item=>{
                     if(item.image === "" || item.image === undefined){
@@ -80,7 +83,7 @@ class Home extends React.Component {
                     }
                 })
             }
-            this.setStateData({ ...this.state, categories: cat, eventslist: events, liveData:streaming })
+            this.setStateData({ ...this.state, categories: cat.reverse(), eventslist: events.reverse(), liveData:streaming })
             this.setStateData({ showsLoader:false, categoryLoader:false })
         })
     }
@@ -89,10 +92,9 @@ class Home extends React.Component {
         this.setState({ ...this.state, isLoader: true });
         this.getData({category: slug}, 'streaming', (data)=>{
             if(data.data){
-                console.log("Stream : ", data)
                 this.setState({ ...this.state, isLoader: false })
                 if(data.data.length > 0){
-                    this.props.navigation.replace("Events", {  data: data.data })
+                    this.props.navigation.navigate("Events", {  data: data.data })
                 }else{
                     showMessage({ message:data.message, type:'warning' })
                 }
@@ -125,6 +127,27 @@ class Home extends React.Component {
 
     render(){
         const { liveData, categories, categoryLoader, isLoader } = this.state;
+        
+        const getUrl = (url) =>{
+            if(url.includes("http")){
+                if(url.includes("watch?v=")){
+                    return { html: `<iframe src="${url.replace("watch?v=", "embed/")}"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="false"
+                        />`}
+                }else if(url.includes("youtu.be")){
+                    return { html: `<iframe src="${url.replace("youtu.be", "youtube.com/embed/")}"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="false"
+                        />`}
+                }else{
+                    return { uri: url }
+                }
+            }else{
+                return { html: `<iframe src="https://www.youtube.com/embed/${url}"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="false"
+                    />`}
+            }
+        }
+        
         const _renderCategories = () => {
             if(categories.length !== 0){
                 return (<>
@@ -169,7 +192,7 @@ class Home extends React.Component {
         const _renderShowsList = () => {
             const { showsLoader, eventslist } = this.state;
             if(eventslist.length !== 0){
-                let newCategoriesList = splitArrayIntoChunksOfLen(eventslist, 4)
+                let newCategoriesList = splitArrayIntoChunksOfLen(eventslist, 3)
                 return (
                     newCategoriesList.map((row, index)=>{
                         return(<Row style={styles.contentRow} key={index}>
@@ -206,8 +229,8 @@ class Home extends React.Component {
         }
 
         const _renderWebView = () =>{
-            if(this.props.navigation.isFocused()){
-                if(liveData[0].url !== '' && liveData[0].url !== undefined){
+            // if(this.props.navigation.isFocused()){
+                if(liveData.length > 0 && liveData[0].url !== '' && liveData[0].url !== undefined){
                     return(
                         <WebView
                             style={{backgroundColor: 'black'}}
@@ -215,16 +238,11 @@ class Home extends React.Component {
                             contentInset={{top: 0, left: 0, bottom: 0, right: 0}}
                             startInLoadingState={this.Loader}
                             allowsInlineMediaPlayback={false}
-                            scrollEnabled={false}
+                            // scrollEnabled={false}
                             onLoadEnd={(e)=>{ this.Loader = false }}
-                            // useWebKit={true}
+                            useWebKit={true}
                             originWhitelist={['*']}
-                            source={{
-                                html:
-                                `<iframe src="${liveData[0].url}"
-                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="false"
-                                    />`
-                            }}/>
+                            source={{ ...getUrl(liveData[0].url) }}/>
                     )
                 }else{
                     return (
@@ -233,7 +251,9 @@ class Home extends React.Component {
                         </Row>
                     )
                 }
-            }
+            // }else{
+                // this.setStateData({ play_live: false })
+            // }
         }
 
         return (<>
@@ -294,11 +314,11 @@ class Home extends React.Component {
                                 <Text>Home</Text>
                             </TouchableOpacity>
                             <Text>|</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>{ this.props.navigation.navigate("PrivacyPolicy") }}>
                                 <Text>Privacy Policy</Text>
                             </TouchableOpacity>
                             <Text>|</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>{ this.props.navigation.navigate("Disclaimer") }}>
                                 <Text>Disclaimer</Text>
                             </TouchableOpacity>
                             <Text>|</Text>
@@ -326,12 +346,8 @@ const styles = StyleSheet.create({
         justifyContent:'center',
     },
     logo:{
-        width: 85,
-        height: 50,
-    },
-    logoUrdu:{
-        width: 130,
-        height: 40,
+        width: widthPercentageToDP('20.5%'),
+        height: widthPercentageToDP('12.1%'),
     },
     socialMediaCol:{
         alignItems:'center',
@@ -354,8 +370,11 @@ const styles = StyleSheet.create({
     // Live Start
     liveStreamContainer:{
         height:heightPercentageToDP('35%'),
+        backgroundColor:'#FFFFFF',
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        borderColor:'#FFB30F',
+        borderWidth:4
     },
     liveIcon:{
         position:'absolute',
@@ -363,7 +382,7 @@ const styles = StyleSheet.create({
         width:35,
         ...Platform.select({
             ios:{ top:10, },
-            android:{ top:40, }
+            android:{ top:10, }
         }),
         left:10,
         zIndex:1
@@ -384,13 +403,6 @@ const styles = StyleSheet.create({
         right:20,
         zIndex:1
     },
-    // backgroundVideo: {
-    //     position: 'absolute',
-    //     top: 0,
-    //     left: 0,
-    //     bottom: 0,
-    //     right: 0,
-    // },
     // Live end
 
     // Second Head Start
@@ -419,7 +431,6 @@ const styles = StyleSheet.create({
             },
             android:{
                 marginTop:35,
-                // marginBottom:35
             },
         }),
     },
@@ -440,44 +451,67 @@ const styles = StyleSheet.create({
     contentContainer:{
         justifyContent:'center',
         alignItems:'center',
-        // height:heightPercentageToDP('42%'),
-        // height:'45%'
     },
     contentContainer01:{
         justifyContent:'center',
         alignItems:'center',
     },
     contentRow:{
-        height:heightPercentageToDP('11.2%'),
-        width:widthPercentageToDP('96%'),
+        width:widthPercentageToDP('91%'),
+        ...Platform.select({
+            ios:{
+                padding:1,
+                height:heightPercentageToDP('15%'),
+            },
+            android:{
+                padding:4,
+                height:heightPercentageToDP('16%'),
+            }
+        }),
         alignSelf:'center',
-        justifyContent:'center'
+        justifyContent:'center',
     },
     contentCol:{
-        height:heightPercentageToDP('10%'),
-        width:heightPercentageToDP('11.2%'),
+        ...Platform.select({
+            ios:{
+                height:heightPercentageToDP('14%'),
+                width:heightPercentageToDP('14%'),
+            },
+            android:{
+                height:heightPercentageToDP('15%'),
+                width:heightPercentageToDP('15%'),
+            }
+        }),
         justifyContent:'flex-end',
         alignItems:'center',
     },
     categoryBg:{
-        height:heightPercentageToDP('10%'),
-        width:heightPercentageToDP('10%'),
+        ...Platform.select({
+            ios:{
+                height:heightPercentageToDP('14%'),
+                width:heightPercentageToDP('14%'),
+            },
+            android:{
+                height:heightPercentageToDP('15%'),
+                width:heightPercentageToDP('15%'),
+            }
+        }),
         position:'absolute',
         zIndex:0
     },
     contentBtnText:{
-        fontSize:10,
+        fontSize:8,
         overflow:'hidden'
     },
     contentBtnImg:{
         ...Platform.select({
             ios:{
-                width: 48,
-                height: 48,
+                width: heightPercentageToDP('9%'),
+                height: heightPercentageToDP('9%'),
             },
             android:{
-                width: 38,
-                height: 38,
+                width: heightPercentageToDP('10%'),
+                height: heightPercentageToDP('10%'),
             }
         }),
         borderRadius: 6,
@@ -487,7 +521,7 @@ const styles = StyleSheet.create({
     showBtnTextView:{
         overflow:'hidden',
         height:16,
-        width:'70%',
+        width:'98%',
         bottom:heightPercentageToDP('0.8%'),
         alignItems:'center',
     },

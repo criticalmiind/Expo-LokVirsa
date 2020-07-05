@@ -17,6 +17,9 @@ import { getData } from './../../Helpers/index';
 import { splitArrayIntoChunksOfLen } from '../../Helpers';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../Redux/Actions/userActions';
+import Footer from './../Component/footer';
+import SearchBox from '../Component/searchBox';
+import { Loader } from '../Component';
 const logo = './../../Assets/Images/logo.png'
 const bg = './../../Assets/Images/bg_768x1024.png'
 const banner = './../../Assets/Images/banner.png'
@@ -24,13 +27,6 @@ const banner = './../../Assets/Images/banner.png'
 const title_thumb_icon = './../../Assets/Icons/title_thumb_icon.png';
 const play_icon = './../../Assets/Icons/play_icon.png';
 const nav_menu_icon = './../../Assets/Icons/nav_menu_icon.png';
-const search_icon = './../../Assets/Icons/search_icon.png';
-
-const bottom_home = './../../Assets/Icons/bottom_home.png';
-const bottom_video = './../../Assets/Icons/bottom_video.png';
-const bottom_menu = './../../Assets/Icons/bottom_menu.png';
-const bottom_search = './../../Assets/Icons/bottom_search.png';
-const bottom_message = './../../Assets/Icons/bottom_message.png';
 
 class Events extends React.Component {
     _isMounted = false;
@@ -39,6 +35,8 @@ class Events extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            isShow:false,
+            tempArray: this.props.navigation.getParam('data') ? this.props.navigation.getParam('data') : [],
             dataArray:[]
         }
     }
@@ -58,7 +56,7 @@ class Events extends React.Component {
     getBlogs(){
         this.getData({}, 'events', (data)=>{
             if(this._isMounted){
-                this.setState({ ...this.state, dataArray:data.data })
+                this.setState({ ...this.state, dataArray:data.data, tempArray:data.data })
             }
         })
     }
@@ -66,8 +64,23 @@ class Events extends React.Component {
     componentWillUnmount(){
         this._isMounted = false;
     }
+    
+    isOdd(num){
+        return num % 2 == 0
+    }
+
+    filterData(data){
+        this.setStateObj({ dataArray:data })
+    }
+
+    setStateObj(obj){
+        if(this._isMounted){ this.setState({ ...this.state, ...obj }) }
+    }
 
     render(){
+        const { isLoader } = this.props;
+        const { isShow } = this.state;
+
         const renderEvents = () => {
             if(this.state.dataArray.length > 0){
             let newList = splitArrayIntoChunksOfLen(this.state.dataArray, 2)
@@ -99,11 +112,11 @@ class Events extends React.Component {
                     <Col key={i} style={styles.showRow01}>
                         <TouchableOpacity
                             onPress={()=>{
-                                this.props.navigation.replace('Player', { 
+                                this.props.navigation.navigate('Player', { 
                                     data:{
                                         url: item.url === undefined ? item.video:item.url,
                                         name: item.name === undefined ? item.title:item.name,
-                                    } 
+                                    }
                                 })
                             }}>
                             <Image source={require(title_thumb_icon)} style={styles.cardBg}/>
@@ -119,7 +132,7 @@ class Events extends React.Component {
                 )
             }else{
                 return(
-                    <Col key={i} style={styles.showRow01}>
+                    <Col key={i} style={[styles.showRow01, ]}>
                         <TouchableOpacity
                             onPress={()=>{
                                 this.props.navigation.replace('Player', {
@@ -130,7 +143,7 @@ class Events extends React.Component {
                                 })
                             }}>
                             <Image source={require(title_thumb_icon)} style={styles.cardBg}/>
-                            <ImageBackground source={{uri:`${item.uri}`}} style={[styles.videoThumb]}>
+                            <ImageBackground source={{uri:`${item.image}`}} style={[styles.videoThumb]}>
                                     <Image source={require(play_icon)}/>
                             </ImageBackground>
                             <Row style={styles.showContentView}>
@@ -142,7 +155,8 @@ class Events extends React.Component {
             }
         }
 
-        return (
+        return (<>
+            <Loader isLoader={isLoader}/>
             <Grid style={styles.mainContainer}>
                 <Image source={require(bg)} style={styles.bgImage}/>
                 <Col>
@@ -160,16 +174,15 @@ class Events extends React.Component {
                             <Image source={require(logo)} style={styles.logo}/>
                         </Col>
 
-                        <Col style={[styles.logoCol, { alignItems:'flex-end' }]}>
-                            <TouchableOpacity
-                                style={{ marginRight:25}}>
-                                <Image source={require(search_icon)} style={{height:16, width:16}}/>
-                            </TouchableOpacity>
-                        </Col>
+                        <SearchBox
+                            tempArray={this.state.tempArray}
+                            filterFun={this.filterData.bind(this)}
+                            showSearchBox={(bolean)=>{ this.setStateObj({ isShow: bolean }) }}
+                            isShow={this.state.isShow}/>
                     </Row>
                     <Row style={styles.headContainer02}>
                         <Image source={require(banner)} style={styles.headContainer02Img}/>
-                        <Text style={styles.headContainer02Text}>Shows</Text>
+                        <Text style={styles.headContainer02Text}>Events</Text>
                     </Row>
 
 
@@ -180,53 +193,10 @@ class Events extends React.Component {
                             </ScrollView>
                         </SafeAreaView>
                     </Row>
-
-                    <Row style={styles.footerContainer}>
-                            <TouchableOpacity
-                                style={styles.buttomBtns}
-                                onPress={()=>{
-                                    this.props.navigation.replace('Home')
-                                }}>
-                                <Image source={require(bottom_home)} style={{height:23, width:23}}/>
-                            </TouchableOpacity>
-                            
-                            <TouchableOpacity
-                                style={styles.buttomBtns}
-                                onPress={()=>{
-
-                                }}>
-                                <Image source={require(bottom_video)} style={{height:23, width:23}}/>
-                            </TouchableOpacity>
-                            
-                            <TouchableOpacity
-                                style={styles.buttomBtns}
-                                onPress={()=>{
-
-                                }}>
-                                <Image source={require(bottom_menu)} style={{height:25, width:25}}/>
-                            </TouchableOpacity>
-                            
-                            <TouchableOpacity
-                                style={styles.buttomBtns}
-                                onPress={()=>{
-
-                                }}>
-                                <Image source={require(bottom_search)} style={{height:23, width:23}}/>
-                            </TouchableOpacity>
-                            
-                            <TouchableOpacity
-                                style={styles.buttomBtns}
-                                onPress={()=>{
-
-                                }}>
-                                <Image source={require(bottom_message)} style={{height:23, width:23}}/>
-                            </TouchableOpacity>
-                            
-                    </Row>
-                
+                    <Footer navigation={this.props.navigation} />
                 </Col>
             </Grid>
-        );
+        </>);
     }
 };
 
@@ -339,15 +309,15 @@ const styles = StyleSheet.create({
         height:heightPercentageToDP('15%'),
         width:widthPercentageToDP('100%'),
         alignSelf:'center',
-        justifyContent:'center'
+        // justifyContent:'center'
     },
     showRow01:{
         overflow:'hidden',
         borderRadius:6,
         borderColor:'gray',
         borderWidth:2,
-        margin:5,
-        width:widthPercentageToDP('47%'),
+        margin:widthPercentageToDP('1%'),
+        width:widthPercentageToDP('48%'),
     },
     cardBg:{
         height:'100%',
@@ -395,28 +365,6 @@ const styles = StyleSheet.create({
         height:heightPercentageToDP('55%')
     },
     // Shows
-
-    // Footer
-    footerContainer:{
-        position:'absolute',
-        bottom:0,
-        backgroundColor:'#FFF',
-        justifyContent:'space-around',
-        width:widthPercentageToDP('100%'),
-        ...Platform.select({
-            ios:{
-                height:heightPercentageToDP('8%'),
-            },
-            android:{
-                height:heightPercentageToDP('10%'),
-            }
-        }),
-        paddingRight:10,
-        paddingLeft:10,
-    },
-    buttomBtns:{
-        padding:15
-    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Events);

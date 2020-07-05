@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Image,
   Text,
-  TextInput
+  TextInput,
+  ImageBackground
 } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
@@ -23,15 +24,12 @@ class Signin extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            payload:{
-                name:'',
-                password:''
-            }
+            payload:{ name:'', password:'' }
         }
     }
 
     UNSAFE_componentWillMount(){
-        // console.log(this.props)
+        this.props.setLoader(false)
     }
 
     setPayload(obj){
@@ -48,13 +46,12 @@ class Signin extends React.Component {
         const { payload } = this.state;
         const { isLoader } = this.props;
         return (<>
-            { isLoader && <Loader /> }
             <Grid style={styles.mainContainer}>
-                <Image source={require(bg)} style={styles.bg}/>
-                <Col>
-                    <Row style={styles.rowOne}>
-                        <Text style={styles.rowOneText}>Login</Text>
-                    </Row>
+            <Loader isLoader={isLoader} />
+
+                <ImageBackground source={require(bg)} style={[styles.mainContainer, { height:'100%' }]}>
+                        
+                    <Row style={styles.rowOne}><Text style={styles.rowOneText}>Login</Text></Row>
 
                     <Row style={styles.rowTwo}>
                         <Col style={styles.rowTwo01}>
@@ -113,12 +110,8 @@ class Signin extends React.Component {
                         </Col>
                     </Row>
 
-                    <Row style={styles.rowThree}>
-                        <Col style={styles.rowThree}>
-                            <Image source={require(logo)} style={styles.footerLogo}/>
-                        </Col>
-                    </Row>
-                </Col>
+                    <Row style={styles.rowThree}><Image source={require(logo)} style={styles.footerLogo}/></Row>
+                </ImageBackground>
             </Grid>
         </>);
     }
@@ -126,6 +119,10 @@ class Signin extends React.Component {
 
 const styles = StyleSheet.create({
     // Head Start
+    mainContainer:{
+        height:heightPercentageToDP('100%'),
+        width:widthPercentageToDP('100%')
+    },
     headContainer:{
         backgroundColor: "#FFF6CA",
         height:heightPercentageToDP('8%'),
@@ -179,9 +176,9 @@ const styles = StyleSheet.create({
         borderRadius:50,
     },
     rowThree:{
+        height:heightPercentageToDP('20%'),
         alignItems:'center',
         justifyContent:'center',
-        paddingBottom:25
     },
     forgotPwd:{
         marginTop:heightPercentageToDP('5%'),
