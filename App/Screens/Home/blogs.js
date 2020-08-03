@@ -16,7 +16,10 @@ import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../Redux/Actions/userActions';
 import Footer from './../Component/footer';
 import SearchBox from '../Component/searchBox';
-const logo = './../../Assets/Images/logo.png'
+
+import LogoIcon from "./../../Assets/svg/Logo.svg";
+
+// const logo = './../../Assets/Images/logo.png'
 const bg = './../../Assets/Images/bg_768x1024.png'
 const banner = './../../Assets/Images/banner.png'
 const nav_menu_icon = './../../Assets/Icons/nav_menu_icon.png';
@@ -107,7 +110,8 @@ class Blogs extends React.Component {
                         </Col>
 
                         <Col style={styles.logoCol}>
-                            <Image source={require(logo)} style={styles.logo}/>
+                            {/* <Image source={require(logo)} style={styles.logo}/> */}
+                            <Row><LogoIcon /></Row>
                         </Col>
 
                         <SearchBox

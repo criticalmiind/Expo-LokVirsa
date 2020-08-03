@@ -16,7 +16,9 @@ import { Loader } from '../Component';
 
 const bg = './../../Assets/Images/bg_768x1024.png'
 const auth_button = './../../Assets/Icons/auth_button.png';
-const logo = './../../Assets/Images/logo.png'
+// const logo = './../../Assets/Images/logo.png';
+
+import LogoIcon from './../../Assets/svg/Logo.svg';
 
 class Signin extends React.Component {
     authentication = authentication.bind(this);
@@ -110,7 +112,12 @@ class Signin extends React.Component {
                         </Col>
                     </Row>
 
-                    <Row style={styles.rowThree}><Image source={require(logo)} style={styles.footerLogo}/></Row>
+                    <Row style={styles.rowThree}>
+                        {/* <Image source={require(logo)} style={styles.footerLogo}/> */}
+                        <Row style={styles.footerLogo}>
+                            <LogoIcon />
+                        </Row>
+                    </Row>
                 </ImageBackground>
             </Grid>
         </>);
@@ -177,6 +184,7 @@ const styles = StyleSheet.create({
     },
     rowThree:{
         height:heightPercentageToDP('20%'),
+        width:widthPercentageToDP('100%'),
         alignItems:'center',
         justifyContent:'center',
     },
@@ -195,9 +203,9 @@ const styles = StyleSheet.create({
         fontSize:16,
     },
     footerLogo:{
-        height: heightPercentageToDP('8%'),
-        width: widthPercentageToDP('28%'),
-        alignSelf:'center'
+        height: "80%",
+        width: "100%",
+        justifyContent:'center',
     }
 });
 

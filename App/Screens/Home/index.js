@@ -21,20 +21,29 @@ import { getData } from './../../Helpers/index';
 import { showMessage } from 'react-native-flash-message';
 import { Loader } from '../Component';
 
-const fb = './../../Assets/Icons/fb.png';
-const youtube = './../../Assets/Icons/youtube.png';
-const twitter = './../../Assets/Icons/twitter.png';
-const instagram = './../../Assets/Icons/instagram.png';
-const live_icon = './../../Assets/Icons/live_icon.png';
-const share_icon = './../../Assets/Icons/share_icon.png';
-const like_icon = './../../Assets/Icons/like_icon.png';
-const show_icon = './../../Assets/Icons/show_icon.png';
+import FBIcon from "./../../Assets/svg/fb.svg";
+import InstagramIcon from "./../../Assets/svg/insta.svg";
+import TwitterIcon from "./../../Assets/svg/twitter.svg";
+import YoutubeIcon from "./../../Assets/svg/youtube.svg";
+import LiveIcon from "./../../Assets/svg/Live.svg";
+import ShareIcon from "./../../Assets/svg/share.svg";
+import LikeIcon from "./../../Assets/svg/Like.svg";
+import LogoIcon from "./../../Assets/svg/Logo.svg";
+
+// const fb = './../../Assets/Icons/fb.png';
+// const youtube = './../../Assets/Icons/youtube.png';
+// const twitter = './../../Assets/Icons/twitter.png';
+// const instagram = './../../Assets/Icons/instagram.png';
+// const live_icon = './../../Assets/Icons/live_icon.png';
+// const share_icon = './../../Assets/Icons/share_icon.png';
+// const like_icon = './../../Assets/Icons/like_icon.png';
+// const show_icon = './../../Assets/Icons/show_icon.png';
+// const logo = './../../Assets/Images/logo.png'
+
 const category_bg = './../../Assets/Icons/category_bg.png';
 const sub_banner = './../../Assets/Icons/sub_banner.png';
 const arrow_left = './../../Assets/Icons/arrow_left.png';
 const arrow_right = './../../Assets/Icons/arrow_right.png';
-
-const logo = './../../Assets/Images/logo.png'
 const content_bg = './../../Assets/Images/bg_400x400.png'
 const head_banner = './../../Assets/Images/head_banner_640x88.png'
 
@@ -59,6 +68,7 @@ class Home extends React.Component {
     async UNSAFE_componentWillMount(){
         this._isMounted = true;
         if (this._isMounted) {
+            // this.props.navigation.openDrawer();
             setTimeout(()=>{
                 this.getCategories()
             },1000)
@@ -264,7 +274,8 @@ class Home extends React.Component {
                         <Image source={require(head_banner)} style={styles.headBanner}/>
                         <Col style={styles.logoCol}>
                             <TouchableOpacity onPress={()=>{ this.props.navigation.toggleDrawer() }}>
-                                <Image source={require(logo)} style={styles.logo}/>
+                                {/* <Image source={require(logo)} style={styles.logo}/> */}
+                                <Row style={styles.logo}><LogoIcon /></Row>
                             </TouchableOpacity>
                         </Col>
                         <Col style={styles.logoCol}>
@@ -272,26 +283,34 @@ class Home extends React.Component {
                         <Col style={styles.socialMediaCol}>
                             <Row style={{ alignItems:'center'}}>
                                 <Text style={styles.findUsText}>FIND US</Text>
-                                <TouchableOpacity>
-                                    <Image source={require(fb)} style={{ height:16, width:16 }}/>
+                                <TouchableOpacity style={{ padding:1 }}>
+                                    {/* <Image source={require(fb)} style={{ height:16, width:16 }}/> */}
+                                    <FBIcon />
                                 </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Image source={require(instagram)} style={{ height:16, width:16 }}/>
+                                <TouchableOpacity style={{ padding:1 }}>
+                                    <InstagramIcon />
+                                    {/* <Image source={require(instagram)} style={{ height:16, width:16 }}/> */}
                                 </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Image source={require(twitter)} style={{ height:16, width:16 }}/>
+                                <TouchableOpacity style={{ padding:1 }}>
+                                    <TwitterIcon />
+                                    {/* <Image source={require(twitter)} style={{ height:16, width:16 }}/> */}
                                 </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Image source={require(youtube)} style={{ height:16, width:16 }}/>
+                                <TouchableOpacity style={{ padding:1 }}>
+                                    <YoutubeIcon />
+                                    {/* <Image source={require(youtube)} style={{ height:16, width:16 }}/> */}
                                 </TouchableOpacity>
                             </Row>
                         </Col>
                     </Row>
 
                     <Row style={styles.liveStreamContainer}>
-                        <Image source={require(live_icon)} style={styles.liveIcon}/>
-                        <Image source={require(share_icon)} style={styles.shareIcon}/>
-                        <Image source={require(like_icon)} style={styles.likeIcon}/>
+                        {/* <Image source={require(live_icon)} style={styles.liveIcon}/>
+                            <Image source={require(share_icon)} style={styles.shareIcon}/>
+                            <Image source={require(like_icon)} style={styles.likeIcon}/> */}
+
+                        <Row style={styles.liveIcon}><LiveIcon /></Row>
+                        <Row style={styles.shareIcon}><ShareIcon /></Row>
+                        <Row style={styles.likeIcon}><LikeIcon /></Row>
                         { _renderWebView() }
                     </Row>
 
@@ -346,8 +365,10 @@ const styles = StyleSheet.create({
         justifyContent:'center',
     },
     logo:{
-        width: widthPercentageToDP('20.5%'),
-        height: widthPercentageToDP('12.1%'),
+        // borderColor:'gray',
+        // borderWidth:0.4,
+        // width: widthPercentageToDP('20.5%'),
+        // height: widthPercentageToDP('12.1%'),
     },
     socialMediaCol:{
         alignItems:'center',
@@ -389,8 +410,8 @@ const styles = StyleSheet.create({
     },
     shareIcon:{
         position:'absolute',
-        height:16,
-        width:16,
+        height:18,
+        width:18,
         bottom:20,
         right:50,
         zIndex:1

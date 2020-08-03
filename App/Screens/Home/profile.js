@@ -17,11 +17,14 @@ import { mapStateToProps, mapDispatchToProps } from '../../Redux/Actions/userAct
 import Footer from './../Component/footer';
 import { Loader } from '../Component';
 import SearchBox from '../Component/searchBox';
-const logo = './../../Assets/Images/logo.png'
+
+import LogoIcon from "./../../Assets/svg/Logo.svg";
+// const logo = './../../Assets/Images/logo.png'
 const bg = './../../Assets/Images/bg_768x1024.png'
 const banner = './../../Assets/Images/banner.png'
 const nav_menu_icon = './../../Assets/Icons/nav_menu_icon.png';
-const search_icon = './../../Assets/Icons/search_icon.png';
+// const search_icon = './../../Assets/Icons/search_icon.png';
+import SearchIcon from './../../Assets/svg/search.svg';
 const auth_button = './../../Assets/Icons/auth_button.png';
 
 class Profile extends React.Component {
@@ -83,7 +86,8 @@ class Profile extends React.Component {
                         </Col>
 
                         <Col style={styles.logoCol}>
-                            <Image source={require(logo)} style={styles.logo}/>
+                            {/* <Image source={require(logo)} style={styles.logo}/> */}
+                            <Row><LogoIcon /></Row>
                         </Col>
                         <SearchBox />
                     </Row>

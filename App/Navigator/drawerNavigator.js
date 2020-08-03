@@ -9,32 +9,48 @@ import {
   TouchableOpacity
 } from "react-native";
 import { createAppContainer } from "react-navigation";
-import { createDrawerNavigator, DrawerItems } from "react-navigation-drawer";
+import { createDrawerNavigator } from "react-navigation-drawer";
 import { HomeNavigator } from "./stackNavigator";
-import { Row, Col } from "react-native-easy-grid";
+import { Row } from "react-native-easy-grid";
 import { heightPercentageToDP, widthPercentageToDP } from "react-native-responsive-screen";
 
 const drawer_banner = './../Assets/Icons/drawer_banner.png';
-const drawer_fb = './../Assets/Icons/drawer_fb.png';
-const drawer_instagram = './../Assets/Icons/drawer_instagram.png';
-const drawer_twitter = './../Assets/Icons/drawer_twitter.png';
-const drawer_youtube = './../Assets/Icons/drawer_youtube.png';
 
-const home = './../Assets/Icons/home.png';
-const profile = './../Assets/Icons/profile.png';
-const community = './../Assets/Icons/community.png';
-const blog = './../Assets/Icons/blog.png';
-const magzine = './../Assets/Icons/magzine.png';
-const store = './../Assets/Icons/store.png';
+// const drawer_fb = './../Assets/Icons/drawer_fb.png';
+// const drawer_instagram = './../Assets/Icons/drawer_instagram.png';
+// const drawer_twitter = './../Assets/Icons/drawer_twitter.png';
+// const drawer_youtube = './../Assets/Icons/drawer_youtube.png';
+
+import FacebookIcon from './../Assets/svg/fb-icon.svg';
+import TwitterIcon from './../Assets/svg/twitter-icon.svg';
+import InstaIcon from './../Assets/svg/Insta-icon.svg';
+import YoutubeIcon from './../Assets/svg/youtube-icon.svg';
+
+import HomeIcon from './../Assets/svg/home-icon.svg';
+import ProfileIcon from './../Assets/svg/Profile-icon.svg';
+import ChatIcon from './../Assets/svg/Chat-icon.svg';
+import BlogIcon from './../Assets/svg/Blog-icon.svg';
+import MagzineIcon from './../Assets/svg/Play-icon.svg';
+import StoreIcon from './../Assets/svg/Last-icon.svg';
+
+
+// const home = './../Assets/Icons/home.png';
+// const profile = './../Assets/Icons/profile.png';
+// const community = './../Assets/Icons/community.png';
+// const blog = './../Assets/Icons/blog.png';
+// const magzine = './../Assets/Icons/magzine.png';
+// const store = './../Assets/Icons/store.png';
 const logout = './../Assets/Icons/logout_icon.png';
 
-const logo = './../Assets/Images/logo.png'
+// const logo = './../Assets/Images/logo.png';
+import LogoIcon from './../Assets/svg/Logo.svg';
 
 const CustomDrawerComponent = (Props, state=states) => (
   <SafeAreaView style={style.mainContainer}>
       <Image source={require(drawer_banner)} style={style.bannerTop} />
     <Row style={style.logoContainer}>
-      <Image source={require(logo)} style={style.logo}/>
+      {/* <Image source={require(logo)} style={style.logo}/> */}
+      <Row style={style.logo}><LogoIcon state={{ padding:120 }}/></Row>
     </Row>
 
     <Row style={{ height:heightPercentageToDP('60%') }}>
@@ -49,7 +65,8 @@ const CustomDrawerComponent = (Props, state=states) => (
                 Props.navigation.navigate("Home")
               })
           }}>
-              <Image source={require(home)} style={{ height:18, width:18 }} />
+              {/* <Image source={require(home)} style={{ height:18, width:18 }} /> */}
+              <HomeIcon />
               <Text style={style.navText}>Home</Text>
           </TouchableOpacity>
         </View>
@@ -63,7 +80,8 @@ const CustomDrawerComponent = (Props, state=states) => (
                 Props.navigation.navigate("Profile")
               })
           }}>
-              <Image source={require(profile)} style={{ height:18, width:18 }} />
+              {/* <Image source={require(profile)} style={{ height:18, width:18 }} /> */}
+              <ProfileIcon />
               <Text style={style.navText}>Profile</Text>
           </TouchableOpacity>
         </View>
@@ -77,7 +95,8 @@ const CustomDrawerComponent = (Props, state=states) => (
                 Props.navigation.navigate("Events")
               })
           }}>
-              <Image source={require(community)} style={{ height:18, width:18, }} />
+              {/* <Image source={require(community)} style={{ height:18, width:18, }} /> */}
+              <ChatIcon />
               <Text style={style.navText}>Events</Text>
           </TouchableOpacity>
         </View>
@@ -91,7 +110,8 @@ const CustomDrawerComponent = (Props, state=states) => (
                 Props.navigation.navigate("Blogs")
               })
           }}>
-              <Image source={require(blog)} style={{ height:18, width:18 }} />
+              {/* <Image source={require(blog)} style={{ height:18, width:18 }} /> */}
+              <BlogIcon />
               <Text style={style.navText}>Blogs</Text>
           </TouchableOpacity>
         </View>
@@ -105,7 +125,8 @@ const CustomDrawerComponent = (Props, state=states) => (
                 // Props.navigation.navigate("Blogs")
               })
           }}>
-              <Image source={require(magzine)} style={{ height:18, width:22 }} />
+              {/* <Image source={require(magzine)} style={{ height:18, width:22 }} /> */}
+              <MagzineIcon />
               <Text style={style.navText}>Magazine</Text>
           </TouchableOpacity>
         </View>
@@ -119,7 +140,8 @@ const CustomDrawerComponent = (Props, state=states) => (
               //   Props.navigation.navigate("SelectServices")
               })
           }}>
-              <Image source={require(store)} style={{ height:18, width:18 }} />
+              {/* <Image source={require(store)} style={{ height:18, width:18 }} /> */}
+              <StoreIcon />
               <Text style={style.navText}>Store</Text>
           </TouchableOpacity>
         </View>
@@ -147,7 +169,8 @@ const CustomDrawerComponent = (Props, state=states) => (
             onPress={()=>{
 
             }}>
-            <Image source={require(drawer_fb)} style={{height:28, width:20}} />
+            {/* <Image source={require(drawer_fb)} style={{height:28, width:20}} /> */}
+            <FacebookIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -155,7 +178,8 @@ const CustomDrawerComponent = (Props, state=states) => (
             onPress={()=>{
 
             }}>
-            <Image source={require(drawer_twitter)} style={{height:28, width:28}} />
+            {/* <Image source={require(drawer_twitter)} style={{height:28, width:28}} /> */}
+            <TwitterIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -163,7 +187,8 @@ const CustomDrawerComponent = (Props, state=states) => (
             onPress={()=>{
 
             }}>
-            <Image source={require(drawer_instagram)} style={{height:28, width:28}} />
+            {/* <Image source={require(drawer_instagram)} style={{height:28, width:28}} /> */}
+            <InstaIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -171,7 +196,8 @@ const CustomDrawerComponent = (Props, state=states) => (
             onPress={()=>{
 
             }}>
-            <Image source={require(drawer_youtube)} style={{height:28, width:30}} />
+            {/* <Image source={require(drawer_youtube)} style={{height:28, width:30}} /> */}
+            <YoutubeIcon />
         </TouchableOpacity>
       </View>
       
@@ -227,7 +253,8 @@ const style = StyleSheet.create({
     },
     logo:{
         width: 160,
-        height: 100
+        height: 100,
+        // backgroundColor:'pink'
     },
     navContainer:{
         flexDirection: "row",

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" height="20" width="28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#SVGID_2_);}
+	.st2{fill:url(#SVGID_3_);}
+</style>
+<g id="Artwork_31">
+	<g>
+		<g>
+			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="1636.4368" y1="266.0762" x2="-2092.2275" y2="238.8597">
+				<stop  offset="0" style="stop-color:#FBB03B"/>
+				<stop  offset="1" style="stop-color:#29ABE2"/>
+			</linearGradient>
+			<path class="st0" d="M358.26,11.95H153.73c-78.18,0-141.78,63.6-141.78,141.78v204.53c0,78.18,63.6,141.78,141.78,141.78h204.53
+				c78.18,0,141.78-63.6,141.78-141.78V153.73C500.05,75.56,436.44,11.95,358.26,11.95 M461.91,358.26
+				c0,57.15-46.5,103.65-103.65,103.65H153.73c-57.15,0-103.65-46.5-103.65-103.65V153.73c0-57.15,46.5-103.65,103.65-103.65h204.53
+				c57.15,0,103.65,46.5,103.65,103.65V358.26z"/>
+			<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="1636.4368" y1="266.0738" x2="-2092.2275" y2="238.8573">
+				<stop  offset="0" style="stop-color:#FBB03B"/>
+				<stop  offset="1" style="stop-color:#29ABE2"/>
+			</linearGradient>
+			<path class="st1" d="M256,124.44c-72.54,0-131.56,59.02-131.56,131.56S183.46,387.55,256,387.55S387.55,328.54,387.55,256
+				S328.54,124.44,256,124.44 M256,349.42c-51.52,0-93.43-41.91-93.43-93.42c0-51.52,41.91-93.43,93.43-93.43
+				c51.51,0,93.42,41.91,93.42,93.43C349.42,307.51,307.51,349.42,256,349.42"/>
+			<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="1637.418" y1="131.6472" x2="-2091.2463" y2="104.4307">
+				<stop  offset="0" style="stop-color:#FBB03B"/>
+				<stop  offset="1" style="stop-color:#29ABE2"/>
+			</linearGradient>
+			<path class="st2" d="M408.53,122.54c0,10.53-8.54,19.07-19.07,19.07c-10.53,0-19.07-8.54-19.07-19.07
+				c0-10.53,8.54-19.07,19.07-19.07C399.99,103.47,408.53,112.01,408.53,122.54"/>
+		</g>
+	</g>
+</g>
+</svg>

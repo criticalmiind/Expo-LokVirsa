@@ -4,11 +4,17 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { Grid, Col, Row } from 'react-native-easy-grid';
+import { Row } from 'react-native-easy-grid';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../Redux/Actions/userActions';
+
+import HomeIcon from './../../Assets/svg/home.svg';
+import VideosIcon from './../../Assets/svg/videos.svg';
+import MenuIcon from './../../Assets/svg/bottom_menu.svg';
+import SearchIcon from './../../Assets/svg/bottom_search.svg';
+import FeedbackIcon from './../../Assets/svg/feedback.svg';
 
 const bottom_home = './../../Assets/Icons/bottom_home.png';
 const bottom_video = './../../Assets/Icons/bottom_video.png';
@@ -41,7 +47,8 @@ class Footer extends React.Component {
                     onPress={()=>{
                         navigation.navigate('Home')
                     }}>
-                    <Image source={require(bottom_home)} style={{height:23, width:23}}/>
+                        <HomeIcon />
+                    {/* <Image source={require(bottom_home)} style={{height:23, width:23}}/> */}
                 </TouchableOpacity>
                 
                 <TouchableOpacity
@@ -49,7 +56,8 @@ class Footer extends React.Component {
                     onPress={()=>{
 
                     }}>
-                    <Image source={require(bottom_video)} style={{height:23, width:23}}/>
+                        <VideosIcon />
+                    {/* <Image source={require(bottom_video)} style={{height:23, width:23}}/> */}
                 </TouchableOpacity>
                 
                 <TouchableOpacity
@@ -57,7 +65,8 @@ class Footer extends React.Component {
                     onPress={()=>{
 
                     }}>
-                    <Image source={require(bottom_menu)} style={{height:25, width:25}}/>
+                        <MenuIcon />
+                    {/* <Image source={require(bottom_menu)} style={{height:25, width:25}}/> */}
                 </TouchableOpacity>
                 
                 <TouchableOpacity
@@ -65,7 +74,8 @@ class Footer extends React.Component {
                     onPress={()=>{
 
                     }}>
-                    <Image source={require(bottom_search)} style={{height:23, width:23}}/>
+                        <SearchIcon />
+                    {/* <Image source={require(bottom_search)} style={{height:23, width:23}}/> */}
                 </TouchableOpacity>
                 
                 <TouchableOpacity
@@ -73,7 +83,8 @@ class Footer extends React.Component {
                     onPress={()=>{
 
                     }}>
-                    <Image source={require(bottom_message)} style={{height:23, width:23}}/>
+                        <FeedbackIcon />
+                    {/* <Image source={require(bottom_message)} style={{height:23, width:23}}/> */}
                 </TouchableOpacity>
             </Row>
         );

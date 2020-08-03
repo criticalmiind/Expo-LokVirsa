@@ -16,17 +16,15 @@ import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../Redux/Actions/userActions';
 import Footer from './../Component/footer';
 import SearchBox from '../Component/searchBox';
-const logo = './../../Assets/Images/logo.png'
+
+import LogoIcon from "./../../Assets/svg/Logo.svg";
+
+// const logo = './../../Assets/Images/logo.png'
 const bg = './../../Assets/Images/bg_768x1024.png'
 const banner = './../../Assets/Images/banner.png'
 const nav_menu_icon = './../../Assets/Icons/nav_menu_icon.png';
-const search_icon = './../../Assets/Icons/search_icon.png';
-
-const bottom_home = './../../Assets/Icons/bottom_home.png';
-const bottom_video = './../../Assets/Icons/bottom_video.png';
-const bottom_menu = './../../Assets/Icons/bottom_menu.png';
-const bottom_search = './../../Assets/Icons/bottom_search.png';
-const bottom_message = './../../Assets/Icons/bottom_message.png';
+// const search_icon = './../../Assets/Icons/search_icon.png';
+import SearchIcon from './../../Assets/svg/search.svg';
 
 class ViewBlogs extends React.Component {
     _isMounted = false;
@@ -68,7 +66,8 @@ class ViewBlogs extends React.Component {
                         </Col>
 
                         <Col style={styles.logoCol}>
-                            <Image source={require(logo)} style={styles.logo}/>
+                            {/* <Image source={require(logo)} style={styles.logo}/> */}
+                            <Row><LogoIcon /></Row>
                         </Col>
 
                         <SearchBox />

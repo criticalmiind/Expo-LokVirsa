@@ -6,6 +6,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./App/Assets/Images/icon.png",
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [ "js", "jsx", "ts", "tsx", "svg" ],
+      "assetExts": [ "ttf", "mp4", "mp3" ]
+    },
     "splash": {
       "image": "./App/Assets/Images/splash.png",
       "resizeMode": "cover",

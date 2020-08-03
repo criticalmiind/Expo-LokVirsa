@@ -6,20 +6,23 @@ import {
   Text,
   Image,
   Platform,
-  ActivityIndicator,
 } from 'react-native';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { WebView } from 'react-native-webview';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../Redux/Actions/userActions';
 import Footer from '../Component/footer';
-const logo = './../../Assets/Images/logo.png'
+
+import LogoIcon from "./../../Assets/svg/Logo.svg";
+
+// const logo = './../../Assets/Images/logo.png'
 const bg = './../../Assets/Images/bg_768x1024.png'
 const banner = './../../Assets/Images/banner.png'
 const nav_menu_icon = './../../Assets/Icons/nav_menu_icon.png';
-const search_icon = './../../Assets/Icons/search_icon.png';
+// const search_icon = './../../Assets/Icons/search_icon.png';
+import SearchIcon from './../../Assets/svg/search.svg';
+
 
 class Disclaimer extends React.Component {
     _isMounted = false;
@@ -86,13 +89,15 @@ class Disclaimer extends React.Component {
                         </Col>
 
                         <Col style={styles.logoCol}>
-                            <Image source={require(logo)} style={styles.logo}/>
+                            {/* <Image source={require(logo)} style={styles.logo}/> */}
+                            <Row><LogoIcon /></Row>
                         </Col>
 
                         <Col style={[styles.logoCol, { alignItems:'flex-end' }]}>
                             <TouchableOpacity
                                 style={{ marginRight:25}}>
-                                <Image source={require(search_icon)} style={{height:16, width:16}}/>
+                                {/* <Image source={require(search_icon)} style={{height:16, width:16}}/> */}
+                                <SearchIcon />
                             </TouchableOpacity>
                         </Col>
                     </Row>

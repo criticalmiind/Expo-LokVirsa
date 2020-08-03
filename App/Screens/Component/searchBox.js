@@ -8,7 +8,9 @@ import {
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-const search_icon = './../../Assets/Icons/search_icon.png';
+
+// const search_icon = './../../Assets/Icons/search_icon.png';
+import SearchIcon from './../../Assets/svg/search.svg';
 
 const SearchBox = ({ filterFun=()=>{}, isShow=false, tempArray=[], showSearchBox=()=>{} }) => {
 
@@ -37,7 +39,8 @@ const SearchBox = ({ filterFun=()=>{}, isShow=false, tempArray=[], showSearchBox
                     <TouchableOpacity
                         style={{ marginRight:25}}
                         onPress={()=>{ showSearchBox(false) }}>
-                        <Image source={require(search_icon)} style={{height:16, width:16}}/>
+                            <SearchIcon />
+                        {/* <Image source={require(search_icon)} style={{height:16, width:16}}/> */}
                     </TouchableOpacity>
                 </Col>
                 <TextInput
@@ -59,7 +62,8 @@ const SearchBox = ({ filterFun=()=>{}, isShow=false, tempArray=[], showSearchBox
                     <TouchableOpacity
                         style={{ marginRight:25}}
                         onPress={()=>{ showSearchBox(true) }}>
-                        <Image source={require(search_icon)} style={{height:16, width:16}}/>
+                        {/* <Image source={require(search_icon)} style={{height:16, width:16}}/> */}
+                        <SearchIcon />
                     </TouchableOpacity>
                 </Col>
             
